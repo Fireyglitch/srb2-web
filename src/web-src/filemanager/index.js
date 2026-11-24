@@ -81,7 +81,7 @@ function getCloudAssetDestination(file) {
   }
 
   if (file.type === "addon" && segments[0] === "addons" && segments.length > 1) {
-    return joinPaths("/addons/userdata", segments.slice(1).join("/"));
+    return joinPaths("/addons/userdata/addons", segments.slice(1).join("/"));
   }
   if (file.type === "model" && segments[0] === "models" && segments.length > 1) {
     return joinPaths("/home/web_user/.srb2", file.key);

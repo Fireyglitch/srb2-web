@@ -56,10 +56,14 @@ function ensureUserDataTree() {
   FS.mkdirTree("/home/web_user/.srb2/logs");
   FS.mkdirTree("/home/web_user/.srb2/models");
   FS.mkdirTree("/addons");
+  var modelsDatPath = "/home/web_user/.srb2/models.dat";
+  if (!FS.analyzePath(modelsDatPath).exists) {
+    FS.writeFile(modelsDatPath, new Uint8Array(0));
+  }
   safeSymlink("/home/web_user/.srb2", "/addons/.srb2");
   safeSymlink("/home/web_user/.srb2", "/addons/userdata");
   safeSymlink("/home/web_user/.srb2/models", "/models");
-  safeSymlink("/home/web_user/.srb2/models.dat", "/models.dat");
+  safeSymlink(modelsDatPath, "/models.dat");
 }
 
 async function keepAlive() {
@@ -234,6 +238,12 @@ async function initGame() {
         }
       } else {
         console.error("SyncFS hydration failed:", err);
+      }
+    } else {
+      try {
+        ensureUserDataTree();
+      } catch (setupErr) {
+        console.error("Failed to ensure user data paths:", setupErr);
       }
     }
 

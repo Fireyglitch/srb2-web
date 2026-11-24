@@ -115,7 +115,7 @@ Keep personal files out of the GitHub Pages build. GitHub Pages has a 1 GB publi
    node .\scripts\upload-custom-assets.js --root "C:\Users\ethan\Downloads\srb2" --bucket "your-bucket" --public-base-url "https://your-public-bucket-url.r2.dev"
    ```
    The script uploads files from `addons`, `models`, `models.dat`, and recognized save/replay files. It does not upload the base game files. Uploading is an explicit step; nothing is sent by building or running the site.
-5. Open the site's File Manager, choose **Import my cloud files**, paste the URL ending in `/srb2-custom/manifest.json`, and choose add-ons, models, saves, or all files. The browser stores imported files in its own local storage. Add-ons appear in the user's add-on folder; models and `models.dat` are linked into the game's model paths.
+5. Open the site's File Manager, choose **Import my cloud files**, paste the URL ending in `/srb2-custom/manifest.json`, and choose add-ons, models, saves, or all files. The browser stores imported files in its own local storage. Add-ons go into the user's `.srb2/addons` folder; models and `models.dat` are linked into the game's model paths.
 
 Choose only what the browser has room for. The imported data is specific to that browser profile and does not automatically transfer to another computer. The importer provides the files; actual 3D rendering still depends on WebGL support and the browser build's hardware renderer.
 
@@ -123,10 +123,10 @@ Choose only what the browser has room for. The imported data is specific to that
 
 ## Publishing the Website
 
-The included `.github/workflows/build_site.yml` builds the site and publishes its output to a `deploy` branch whenever code is pushed to `master`.
+The included `.github/workflows/build_site.yml` builds the site and publishes its output to a `deploy` branch whenever code is pushed to `main`.
 
-1. Put this project in a GitHub repository or fork the upstream project. The local working copy is not connected to a GitHub account yet.
-2. Push the changes to the repository's `master` branch. If the repository uses `main`, update the workflow's branch filters in `.github/workflows/build_site.yml` first.
+1. Put this project in a GitHub repository or fork the upstream project.
+2. Push changes to the repository's `main` branch.
 3. In the GitHub repository, open **Settings → Pages** and select **Deploy from a branch**, then choose the `deploy` branch and `/ (root)`.
 4. After the Actions run succeeds, open the Pages URL. Open its File Manager, choose **Import my cloud files**, and paste the R2 manifest URL.
 
