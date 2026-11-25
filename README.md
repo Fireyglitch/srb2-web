@@ -101,7 +101,7 @@ This should work on both Windows and Linux.
 
 ## Importing Your Add-ons, Models, and Saves
 
-Keep personal files out of the GitHub Pages build. GitHub Pages has a 1 GB published-site limit, and browser storage can also run out if every file is installed at once. This project can store the files in a separate public Cloudflare R2 bucket and import selected groups into the browser.
+Keep add-ons and models out of the GitHub Pages build. GitHub Pages has a 1 GB published-site limit, and browser storage can also run out if every file is installed at once. The save and replay files in `web-assets/default-saves` are bundled with the public site and copied into a browser only when a matching file is not already present. Do not put private saves there. Other personal files can be stored in a separate public Cloudflare R2 bucket and imported selectively.
 
 1. Create an R2 bucket and enable its public `r2.dev` URL. The manifest and assets are publicly readable; only upload content you have permission to share.
 2. In the bucket's CORS settings, allow `GET` from the exact origin serving this site (and `http://localhost:3000` while developing). Allow the `GET` method and `*` request headers.

@@ -66,6 +66,49 @@ function ensureUserDataTree() {
   safeSymlink(modelsDatPath, "/models.dat");
 }
 
+async function seedDefaultSaves(FS) {
+  var manifestUrl = new URL("assets/default-saves/manifest.json", document.baseURI);
+  var manifestResponse = await fetch(manifestUrl.href);
+  if (!manifestResponse.ok) {
+    throw new Error(`Save manifest request failed: ${manifestResponse.status} ${manifestResponse.statusText}`);
+  }
+
+  var paths = await manifestResponse.json();
+  if (!Array.isArray(paths)) {
+    throw new Error("The bundled save manifest is invalid.");
+  }
+
+  var installed = 0;
+  for (var relativePath of paths) {
+    if (
+      typeof relativePath !== "string" ||
+      relativePath.startsWith("/") ||
+      relativePath.includes("\\") ||
+      relativePath.split("/").some((segment) => !segment || segment === "." || segment === "..")
+    ) {
+      throw new Error(`The bundled save path is invalid: ${relativePath}`);
+    }
+
+    var destinationPath = `/home/web_user/${relativePath}`;
+    if (FS.analyzePath(destinationPath).exists) {
+      continue;
+    }
+
+    var assetPath = relativePath.split("/").map(encodeURIComponent).join("/");
+    var assetUrl = new URL(assetPath, manifestUrl);
+    var assetResponse = await fetch(assetUrl.href);
+    if (!assetResponse.ok) {
+      throw new Error(`Bundled save request failed for ${relativePath}: ${assetResponse.status} ${assetResponse.statusText}`);
+    }
+
+    FS.mkdirTree(destinationPath.slice(0, destinationPath.lastIndexOf("/")));
+    FS.writeFile(destinationPath, new Uint8Array(await assetResponse.arrayBuffer()));
+    installed += 1;
+  }
+
+  return installed;
+}
+
 async function keepAlive() {
   if (navigator.requestWakeLock) {
     await navigator.requestWakeLock("screen");
@@ -227,7 +270,7 @@ async function initGame() {
 
   ensureUserDataTree();
   FS.mount(IDBFS, {}, "/home/web_user");
-  FS.syncfs(true, (err) => {
+  FS.syncfs(true, async (err) => {
     if (err) {
       if (isErrno44(err)) {
         console.warn("Recoverable SyncFS hydration error:", err);
@@ -244,6 +287,28 @@ async function initGame() {
         ensureUserDataTree();
       } catch (setupErr) {
         console.error("Failed to ensure user data paths:", setupErr);
+      }
+    }
+
+    if (!err || isErrno44(err)) {
+      try {
+        ensureUserDataTree();
+        var installedSaves = await seedDefaultSaves(FS);
+        if (installedSaves > 0) {
+          await new Promise((resolve, reject) => {
+            FS.syncfs(false, (syncError) => {
+              if (syncError) {
+                reject(syncError);
+              } else {
+                resolve();
+              }
+            });
+          });
+          console.log(`Installed ${installedSaves} bundled save files.`);
+        }
+      } catch (saveError) {
+        console.error("Bundled save setup failed:", saveError);
+        await dialog.alert(`Could not install bundled saves: ${saveError.message || saveError}`);
       }
     }
 
