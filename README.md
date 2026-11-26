@@ -101,7 +101,11 @@ This should work on both Windows and Linux.
 
 ## Importing Your Add-ons, Models, and Saves
 
-Keep add-ons and models out of the GitHub Pages build. GitHub Pages has a 1 GB published-site limit, and browser storage can also run out if every file is installed at once. The save and replay files in `web-assets/default-saves` are bundled with the public site and copied directly into `/addons/userdata` only when a matching file is not already present. Do not put private saves there. Other personal files can be stored in a separate public Cloudflare R2 bucket and imported selectively.
+GitHub Pages has a 1 GB published-site limit, and browser storage can also run out if every file is installed at once. The save and replay files in `web-assets/default-saves` are bundled with the public site and copied directly into `/addons/userdata` only when a matching file is not already present. Do not put private saves there.
+
+A public model pack is included in `web-assets/models` with its index at `web-assets/models.dat` (about 498 MiB). These files are publicly downloadable and are included only with permission to redistribute them. The pack is not downloaded automatically. To install it in this browser, open the File Manager, choose **Import my cloud files**, paste `https://fireyglitch.github.io/srb2-web/assets/model-pack-manifest.json`, then choose **3D models** and confirm the download. This stores the model files in this browser's SRB2 data; allow enough browser storage for about 498 MiB.
+
+Other personal files can be stored in a separate public Cloudflare R2 bucket and imported selectively.
 
 1. Create an R2 bucket and enable its public `r2.dev` URL. The manifest and assets are publicly readable; only upload content you have permission to share.
 2. In the bucket's CORS settings, allow `GET` from the exact origin serving this site (and `http://localhost:3000` while developing). Allow the `GET` method and `*` request headers.
@@ -130,7 +134,7 @@ The included `.github/workflows/build_site.yml` builds the site and publishes it
 3. In the GitHub repository, open **Settings → Pages** and select **Deploy from a branch**, then choose the `deploy` branch and `/ (root)`.
 4. After the Actions run succeeds, open the Pages URL. Open its File Manager, choose **Import my cloud files**, and paste the R2 manifest URL.
 
-Do not commit your personal add-ons, model files, or saves to GitHub. They stay in R2 and are fetched only when selected in the browser. The school network must allow both the Pages site and the R2 public URL; this setup does not bypass network restrictions.
+Do not commit additional private add-ons, model files, or saves to GitHub. The model pack described above is an intentional public exception; only add files you have permission to redistribute. Other personal files stay in R2 and are fetched only when selected in the browser. The school network must allow both the Pages site and the R2 public URL; this setup does not bypass network restrictions.
 
 ---
 
