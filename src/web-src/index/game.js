@@ -89,7 +89,7 @@ async function seedDefaultSaves(FS) {
       throw new Error(`The bundled save path is invalid: ${relativePath}`);
     }
 
-    var destinationPath = `/home/web_user/${relativePath}`;
+    var destinationPath = `/addons/userdata/${relativePath}`;
     if (FS.analyzePath(destinationPath).exists) {
       continue;
     }
