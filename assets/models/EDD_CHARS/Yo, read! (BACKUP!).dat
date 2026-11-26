@@ -1,0 +1,57 @@
+(BACKUP FILE INCASE YOU LOST THE FILE!)
+
+OS ONLY = The said version can only be found in SRB2 Official Server in #3d-models. (good luck scrolling to find them)
+Release = The said version has been released publicly to Message Board.
+
+Updates:
+
+(OS ONLY) V1: Junio and Snoc released.
+(OS ONLY) V1.5: CD and S3 Sonic released, new models folder.
+(OS ONLY) V1.6 (RELEASE) V1: Alt and Crystal Sonic released, fixed models IDS and folder.
+(OS ONLY) V2 (RELEASE) V1.5 Neo, Ova, Pointy and Bandages Sonic released. (enough of sonics oh my god)
+
+--------------------------------------------------------------------------------------------
+Junio Sonic
+
+-- juniosonic EDD_CHARS/sonicjunio.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+Snoc (Works with vanilla sonic too)
+
+--  sonc EDD_CHARS/snoc.md3 10.0 0.0
+--  sonic EDD_CHARS/snoc.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+S3 Sonic
+
+s3sonic EDD_CHARS/sonics3.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+CD Sonic
+
+!! KNOWN BUGS !!
+
+Spring, Fall and Edge animations missing. (CAN'T FIX, SORRY!)
+
+cdsonic EDD_CHARS/soniccd.md3 10.0 0.0
+CDSC EDD_CHARS/cdsc.md3 10.0 0.0
+SCFA EDD_CHARS/scfa.md3 10.0 0.0
+CDVC EDD_CHARS/cdvc.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+Alt and Crystal Sonic
+
+altsonic EDD_CHARS/sonicalt.md3 10.0 0.0
+crystalsonic EDD_CHARS/soniccrystal.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+Pointy Sonic
+
+pointy EDD_CHARS/sonicpointy.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+Neo Sonic
+
+msonic EDD_CHARS/sonicneo.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+Ova Sonic
+
+ovasonic EDD_CHARS/sonicova.md3 10.0 0.0
+--------------------------------------------------------------------------------------------
+Bandages Sonic
+
+bandages EDD_CHARS/sonicbandages.md3 10.0 0.0
